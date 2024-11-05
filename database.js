@@ -1,9 +1,5 @@
 import * as mongoose from "mongoose";
 
-import dotenv from "dotenv";
-
-dotenv.config();
-
 const MONGODB_URI = process.env.MONGODB_URI;
 
 try {
@@ -31,9 +27,10 @@ const repositorySchema = new mongoose.Schema({
 const Repository = mongoose.model('repositories', repositorySchema);
 
 
-export const createNewRepository = (repoData) => {
-    const existingRepo = Repository.findOne({repoId: repoData.repoId})
+export const createNewRepository = async (repoData) => {
+    const existingRepo = await Repository.findOne({repoId: repoData.repoId})
     if (existingRepo) {
+        console.log(`Repository ${repoData.name} already exists`);
         return existingRepo;
     }
     return new Repository(repoData).save();
