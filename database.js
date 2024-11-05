@@ -33,5 +33,7 @@ export const createNewRepository = async (repoData) => {
         console.log(`Repository ${repoData.name} already exists`);
         return existingRepo;
     }
+    console.log(`Repository ${repoData.name} saved successfully`);
+
     return new Repository(repoData).save();
 }
