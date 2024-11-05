@@ -32,5 +32,9 @@ const Repository = mongoose.model('repositories', repositorySchema);
 
 
 export const createNewRepository = (repoData) => {
+    const existingRepo = Repository.findOne({repoId: repoData.repoId})
+    if (existingRepo) {
+        return existingRepo;
+    }
     return new Repository(repoData).save();
 }
