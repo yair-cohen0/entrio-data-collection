@@ -3,14 +3,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const githubToken = process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const parseData = (repoData) => ({
-    id: repoData.id,
-    stars: repoData.stargazers_count,
+    repoId: +repoData.id,
+    name: repoData.name,
+    stars: +repoData.stargazers_count,
     owner: repoData.owner?.login,
     description: repoData.description,
     forks: repoData.forks_url,
-    numberOfForks: repoData.forks_count,
+    numberOfForks: +repoData.forks_count,
     languages: repoData.language,
     topics: repoData.topics
 })
@@ -20,7 +21,7 @@ export const fetchRepositoryData = async (repoName) => {
     try {
          repos = (await axios.get(`https://api.github.com/search/repositories?q=${repoName}`, {
             headers: {
-                Authorization: `token ${githubToken}`,
+                Authorization: `token ${GITHUB_TOKEN}`,
             },
         })).data;
     } catch (e) {

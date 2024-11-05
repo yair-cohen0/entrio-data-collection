@@ -1,3 +1,4 @@
 import {fetchRepositoryData} from './dataCollector.js'
+import {createNewRepository} from "./database.js";
 
-fetchRepositoryData('twenty')
+createNewRepository(await fetchRepositoryData('twenty'))
